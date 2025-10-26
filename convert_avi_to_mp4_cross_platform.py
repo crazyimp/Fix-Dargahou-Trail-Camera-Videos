@@ -5,8 +5,8 @@ This script converts AVI videos to MP4 format using mplayer and ffmpeg.
 Works on Windows, macOS, and Linux.
 
 Usage:
-  python convert_avi_to_mp4.py [directory_path]
-  
+  python convert_avi_to_mp4.py [--remove_original_file True] directory_path
+
 If no directory is specified, the current directory will be used.
 """
 
