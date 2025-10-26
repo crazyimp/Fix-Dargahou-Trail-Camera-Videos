@@ -97,7 +97,7 @@ def find_avi_files(directory):
     return [str(file) for file in avi_files]
 
 
-def convert_avi_to_mp4(avi_file, temp_dir):
+def convert_avi_to_mp4(avi_file, temp_dir, remove_original_file=False):
     """Convert a single AVI file to MP4"""
     # Get file information
     file_path = Path(avi_file)
@@ -166,6 +166,11 @@ def convert_avi_to_mp4(avi_file, temp_dir):
         size_display = format_file_size(size_bytes)
 
         print_colored(Colors.GREEN, f"  Successfully created: {output_mp4} ({size_display})")
+
+        # Check if we should remove the original file
+        if remove_original_file:
+            os.remove(avi_file)
+
         return True
 
     except Exception as e:
@@ -186,6 +191,8 @@ def main():
     parser = argparse.ArgumentParser(description='Convert AVI videos to MP4 format')
     parser.add_argument('directory', nargs='?', default=os.getcwd(),
                         help='Directory containing AVI files (default: current directory)')
+    parser.add_argument('--remove_original_file', nargs='?', default=False,
+                        help='Deletes original file(s) if fixing them worked, (default: False)')
     args = parser.parse_args()
 
     target_dir = args.directory
@@ -227,7 +234,7 @@ def main():
         start_time = time.time()
 
         for avi_file in avi_files:
-            if convert_avi_to_mp4(avi_file, temp_dir):
+            if convert_avi_to_mp4(avi_file, temp_dir, args.remove_original_file):
                 successful += 1
             else:
                 failed += 1
