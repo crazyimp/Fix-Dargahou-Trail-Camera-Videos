@@ -136,6 +136,12 @@ def convert_avi_to_mp4(avi_file, temp_dir, remove_original_file=False):
     print_colored(Colors.BLUE, "  Step 2/3: Creating MP4 with ffmpeg...")
 
     try:
+        # make sure that the output file doesn't exists, otherwise ffmpeg will be stuck
+        # when trying to run the script a second time
+        if os.path.exists(output_mp4):
+            print(Colors.YELLOW, f"  Output file already exists, removing it (will be created again).")
+            os.remove(output_mp4)
+
         ffmpeg_cmd = ['ffmpeg', '-hide_banner', '-loglevel', 'error',
                       '-i', temp_h264, '-c:v', 'copy', output_mp4]
 
