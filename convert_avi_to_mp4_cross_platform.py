@@ -12,9 +12,7 @@ If no directory is specified, the current directory will be used.
 
 import os
 import sys
-import glob
 import subprocess
-import shutil
 import tempfile
 import platform
 from pathlib import Path
